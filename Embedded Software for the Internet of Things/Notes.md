@@ -40,7 +40,6 @@
             - we refine the requirements to begin designing the system architecture (Specifications)
         - One good way to refine at least the UI portion of a system's requirements is to build a mock-up
             - Mock-up:: should give the customer a good idea of the system
-            - ![](%LOCAL_FILE%YC1QcRS9wG17fIuRj9N-3vRKlxpEyQEBFqTTdXHo9hQtIFn9CN0ebrWZ0FvA0S5Nk7BDrM_Ciw_sJj0_c2Hs5ymXllmP3ufIVxOvbFoutMTlvonknzdD46taa5EkdTHg.png)
             - After requirements form, check for internal consistency
         - Specifications must be
             - understandable
@@ -76,7 +75,6 @@
             - labels start in first column
             - instructions start in the second column
             - comments run from the designated character at the end of the line
-            - ![](%LOCAL_FILE%NAeHWQO6_nzhJs45oYM0KeOWxo7fYCNNNAsIGQI9RaHlVrkfcnMdfS5BuOswPwq7s2gajISSsq5j0C1APtaL3SRAKGnm-216qDdFKN53syPmw4TxumDuthHjgPJDudhi.png)
         - Assembler must also provide pseudo-ops
             - pseudo-ops:: help programmer to create complete assembly programs
         - 
@@ -104,7 +102,7 @@
             - Function frames:: C uses Frame mechanism to pass parameter between functions
                 - register holds frame pointer (FP), points to top of frame
                 - element within frame are accessed using offset from FP.
-                    - $[fp, \#-n]$ takes $n^{th}$ location from FP.
+                    - \\([fp, \#-n]\\) takes \\(n^{th}\\) location from FP.
             - Procedure linkage:: convention used to pass values in or out procedures
                 - to ensure any function may call any other
             - Stack Pointer:: defines the end of the current frame
@@ -117,26 +115,21 @@
         - Microprocessors can provide programming support for I/O in 2 ways
             - I/O instructions
             - memory-mapped I/O
-            - ![](%LOCAL_FILE%YFqq0ViVVkWTxrg6JNAKsxqy9CDEPKNGkzcHyRoyPWYJCiPMOlJQdYitwCPNPtPNcNVLY8XqpcZ8pMb52_rFtq4ZIBaAGGkdY5R5NDr4KkFtTbRmxx6f7zICCNanE8nP.png)
         - To read a device register:
             - ```c
 #define DEV1 0x1000
 // ...
-
 int peek (char *location) {
 	return *location;
 }
-
 dev_status = peek(DEV1);	// read the device register```
         - To write to the status register:
             - ```c
 #define DEV1 0x1000
 // ...
-
 void poke (char *location, char newval) {
 	(*location) = newval;	// write to location
 }
-
 poke(DEV1, 8);				// write 8 to dev register```
         - How to communicate with devices in a program
             - The simplest way is to communicate with busy-wait I/O, but it's extremely inefficient.
@@ -148,12 +141,10 @@ poke(DEV1, 8);				// write 8 to dev register```
             - concurrency, which make very efficient use of the CPU
             - When interrupt occurs
                 - Program counter's value is changed to point to an INTERRUPT HANDLER routine
-            - ![](%LOCAL_FILE%pZbkiPPJdmD0vHpjt7NRG9W5utFi56PcXdv3N-B_ZzzGkkwBS2mes50g4RvUpPU0BPqKoL4zs4zcdYyFwEJvXjda-akNb_Q1UD0J1hmZECqlt3S3TYGBrs2WaIQeZGVg.png)
         - Because the CPU checks for interrupts at every instruction, it can respond quickly to service requests from devices.
         - There are 2 ways in which interrupts can be generalized to handle multiple devices
             - interrupt priorities:: allow to recognize the importance of each interrupt
             - interrupt vectors:: allow the interrupting device to specify its handler
-            - ![](%LOCAL_FILE%esfhiRYhi1-ZYlShtrI6Te-fy-iL_AhRRTH9hSNlI8PXOHyoP7OqSRQPfxH7HUR1SxaX4YkKpkvKJBqAuQlgV4eLsK1uFAlwUdMwjDAHkUZmnEnSLSfv8PBCDojtxnnY.png)
             - e can change priority by connecting it to a different interrupt request line
         - Masking:: priority mechanism that ensure that low priority interrupt does not occur when a higher priority interrupt is being handled
             - NMI - Non maskable interrupt:: The highest priority interrupt, usually interrupts caused by power failure.
@@ -224,7 +215,6 @@ poke(DEV1, 8);				// write 8 to dev register```
                             - pages/segments may be accessible only by the supervisor
             - Caches
                 - widely used to speed up read and write operations in memory systems
-                - ![](%LOCAL_FILE%mw4vjUMXIORuejWWHYJrTADtcES_dzOYLNQOoAvjEgsHcV9v1J8ln0lSzHTUCy5Mqs4CF-uSD4jQ9KaX2Q77ydrjpZsRhXNlD7bvWeTQBASjL1_-659O01wvtJOS1tFQ.png)
                 - is:: a small, fast memory that holds copies of some of the contents of main memory.
                 - Cache controller:: mediates between the CPY and the memory system comprised of the cache and main memory.
                 - We can classify cache misses into
@@ -232,12 +222,11 @@ poke(DEV1, 8);				// write 8 to dev register```
                     - Capacity miss:: caused by a too-large working set
                     - Conflict miss:: when two locations map to the same location in the cache
                 - Average memory access time
-                    - let $h$ be the hit rate, follows that $1-h$ is the miss rate
-                    - formula:: $t_{av} = ht_{cache} + (1-h)t_{main}$
+                    - let \\(h\\) be the hit rate, follows that \\(1-h\\) is the miss rate
+                    - formula:: \\(t_{av} = ht_{cache} + (1-h)t_{main}\\)
                 - Modern CPUs may use multiple levels of cache
-                - ![](%LOCAL_FILE%utNHZs24QPpPN1PCOk2EsDadNNuZbwzP5jHN_O-nq-dOcR0ZFNsOve9LkQTwWcHq_WsiEwvRgk3-ZinBwECv9yxr4rGm-DNuXamSsH7wpnnmcgTz76kgnUCOIUozPRT5.png)
                     - first-level is closest to the CPU, the second-level feeds the first-level cache.
-                    - average access time:: $t_{av} = h_1t_{L1} + (h_2-h_1)t_{L2} + (1-h_2)t_{main}$
+                    - average access time:: \\(t_{av} = h_1t_{L1} + (h_2-h_1)t_{L2} + (1-h_2)t_{main}\\)
                     - Replacement policies
                         - Least recently used (LRU):: throw out the block that has been used farthest in the past
                         - Random replacement
@@ -310,7 +299,7 @@ poke(DEV1, 8);				// write 8 to dev register```
                 - Dynamic voltage and frequency scaling (DVFS)
                     - optimizes dynamic power consumption
                         - speed of CMOS or power supply voltage
-                        - power consumption of CMOS $\alpha$ (proportional) $V^2$
+                        - power consumption of CMOS \\(\alpha\\) (proportional) \\(V^2\\)
                     - reduce voltage to the lowest level that provides the performance
                         - adjust voltage and clock speed
                 - Race-to-dark
@@ -318,7 +307,7 @@ poke(DEV1, 8);				// write 8 to dev register```
                         - run as fast as possible and shut down the CPU
                             - good if leakage is very high
                 - can be used in combination
-                    - $E_{tot} = {\displaystyle \int_{0}^{T} P(t)\ dt} = {\displaystyle \int_{0}^{T}} \displaystyle \Large[\small P_{dyn}(t) + P_{static}(t)\Large]\small \ dt$
+                    - \\[E_{tot} = {\displaystyle \int_{0}^{T} P(t)\ dt} = {\displaystyle \int_{0}^{T}} \displaystyle \Large[\small P_{dyn}(t) + P_{static}(t)\Large]\small \ dt\\]
     - 
     - Computing Platforms
         - Hardware
@@ -530,7 +519,6 @@ poke(DEV1, 8);				// write 8 to dev register```
                 - the **current state** of the system
             - Implement the program in a state machine style (as in the hardware design)
             - example: simple belt controller
-                - ![](%LOCAL_FILE%QHk8riyUMkKQW1ZExhjT7D8yfiHkRFiO51cZMKzA3LWJ2ssGj-vyC0UJQXOUllpAK5YEO9sG3sJBOWkcW_MI-ykKU1h3byAuVJ1ez09HV51zi2fTRHNOnrIdoOU07TqS.png)
             - ```c
 #define IDLE 0
 #define SEATED 1
@@ -539,7 +527,6 @@ poke(DEV1, 8);				// write 8 to dev register```
 switch(state) { /* check the current state */
 	case IDLE:
 		if (seat){ state = SEATED; timer_on = TRUE; }
- 
 		/* default case is self-loop */
 		break;
 	case SEATED:
@@ -566,13 +553,12 @@ switch(state) { /* check the current state */
             - data structure that lets us handle streaming data in an efficient way
             - in C:
                 - use an array as the buffer
-                - the variable $pos$ holds the position of the current sample
+                - the variable \\(pos\\) holds the position of the current sample
                     - this variable moves as new values are added to the buffer
                 - ```c
 #define CMAX 6 /* filter order */
 int circ[CMAX]; /* circular buffer */
 int pos; /* position of current sample */
-
 void circ_update(int xnew) {
 	/* compute the new head value with wraparound; the pos pointer moves from 0 to CMAX-1 */
 	pos = ((pos == CMAX-1) ? 0 : (pos+1));
@@ -580,7 +566,7 @@ void circ_update(int xnew) {
 	circ[pos] = xnew;
 }```
                 - initialization:: set the buffer values and pos to zero
-                - return:: the $i^{th}$ value of the buffer
+                - return:: the \\(i^{th}\\( value of the buffer
                     - translate the index in temporal order
                 - ```c
 void circ_init() {
@@ -598,21 +584,17 @@ int circ_get(int i) {
         - Signal Flow Graph
             - represents many different filtering structures
                 - nodes:: represent either arithmetic or delay operators
-                    - the box labeled $z^{-1}$ is a delay operator, performs a time delay of one sample period
-                    - the edge labeled with $b_1$ multiplies the output of the delay by $b_1$
+                    - the box labeled \\(z^{-1}\\) is a delay operator, performs a time delay of one sample period
+                    - the edge labeled with $b_1$ multiplies the output of the delay by \\(b_1\\)
             - Digital filters
                 - inputs and outputs are generated at the sample rate
-                    - $x[n]$  and $y[n]$ are sequences indexed by $n$
-            - example:
-                - ![](%LOCAL_FILE%pWE5WQblMVxcRXtTTUBfDwBTcwq-KFNtlsopUn_JbP8XVc0hJDupTiB19wbc_dNhc4zznzfD0iuxpJ7se2avTbZ3reF6s-5WS8kLcuM8BqnCLBIkCW0MA6bOzyQh5WSB.png)
-            - 
+                    - \\(x[n]\\)  and \\(y[n]\\) are sequences indexed by \\(n\\)
             - FIR Filter
                 - FIR:: Finite Impulse Response
                 - code looks like this
                     - ```c
 for (i=0, y=0.0; i<N; i++)
 	y += x[i] * b[i];```
-                - ![](%LOCAL_FILE%Tz66HPn-Sij2S2QwBvbnzpPnL9laa7p9a2L-5fmgSaGvggCw_WUw8QVH7UpxdXUx1V4y3Q0raLXTMMVP23z9aNuPA0CKLL1HX5FMFAt8sNleR-2qCXtL6QYNP2_Al01o.png)
                 - In C:
                     - ```c
 void circ_update(int xnew) {
@@ -635,12 +617,10 @@ int fir(int xnew) {
             - IIR Filter
                 - IIR:: Infinite Impulse Filter
                 - give significantly less numerical noise than another
-                - ![](%LOCAL_FILE%KPhfmCSo13-MmNClzUNZ8_J0cwRbgWfmwZQk6Jo8QmjwjSjQ8jTdrCIxv2SkMeoyGlHH38z3_7s1AD16w4I3msldgx3w_R0YVeGoe_ecW24P2-MLk2tRWJSfUMj6CYK4.png)
                 - In C:
                     - ```c
 int iir2(int xnew) {
 	int i, aside, bside, result;
-	
 	for (i=0, aside=0; i<ZMAX; i++)
 		aside += -a[i+1] * circ_get(i);
 	for (i=0, bside=0; i<ZMAX; i++)
@@ -665,13 +645,11 @@ int iir2(int xnew) {
 #define Q_MAX (Q_SIZE-1) /* this is the maximum index value into the array */
 int q[Q_SIZE]; /* the array for our queue */
 int head, tail; /* indexes for the current queue head and tail */
-
 void queue_init() {
 	/* initialize the queue data structure */
 	head = 0;
 	tail = 0;
 }
-
 void enqueue(int val) {
 	if (((tail+1) % Q_SIZE) == head) error("enqueue onto full queue",tail);
 	q[tail] = val;
@@ -681,7 +659,6 @@ void enqueue(int val) {
 	else
 		tail++;
 }
-
 int dequeue() {
 	int returnval;
 	if (head == tail) error("dequeue from empty queue",head);
@@ -696,7 +673,6 @@ int dequeue() {
         - Producer/Consumer
             - Many systems may take in varying amounts of data over time and produce varying amounts
             - The variable-rate output of one stage becomes the variable-rate input of another stage
-                - ![](%LOCAL_FILE%r9U7dclOj9wQlo2TUV-WSLDiXoft-PvhDkkiwHefBF-NYyxb6P2mjZNK-E5WbAwlsMd5qN47DCiLw5c57w5-mUcnH9RzWUGzz1SnSszXuD2C85XOf9nxdYc4LxF3G4pI.png)
         - 
         - Models of Programs
             - source code is not a good representation for programs
@@ -712,13 +688,11 @@ int dequeue() {
                     - with only one entry and exit point
                     - known as  _basic block_ .
                 - before we are able to draw the DFG
-                    - two assignments to the variable $x$
+                    - two assignments to the variable \\(x\\)
                         - we need to rewrite the code in **single-assignment form**, in which a variable appears only once on the left size
-                    - ![](%LOCAL_FILE%g5LX3LFP26Gk38NngNUtWnqP2HwOhKbDFuvxQUNYzjLH7y8ID4ZtjCU1qJBCPMlnl1o02rfPgGOKFN42Eept-1oDrJSFp8cfPb24htTrCenrGxXvjFOg73j91L2ejg7i.png)
                 - single-assignment form means
-                    - data flow graph is acyclic:: if $x$ is assigned multiple times, then the second assignent would form a cycle in the graph
+                    - data flow graph is acyclic:: if \\(x\\) is assigned multiple times, then the second assignent would form a cycle in the graph
                 - keeping the data flow graph acyclic is important in many types of analyses
-                - ![](%LOCAL_FILE%t1uZ3MkQ4-V3We0VEXMuNN5G4h1VfynnbyLxm5SK8Fa2Nf2q0w7akwLnZ5CP-zZUE4A4pMe3id16E_QoWrAjPNIE93ZGljhg2-Q8jd04dh4OxACrnuyoQd-Vy2JfVt7z.png)
             - Control-data flow graph (CDFG)
                 - is a sequential representation of the program
                     - there is only one program counter in our execution model of the CDF, operations are not executed in parallel
@@ -732,10 +706,6 @@ int dequeue() {
                             - jump/branch
                 - rectangular nodes represent the basic blocks
                 - diamond-shaped nodes represent the conditionals
-                - ![](%LOCAL_FILE%JPF4nvpr-di5mhW5JV0GD2-IDNtpgXrM0QV4GUjCTGRhbxnquZBCR8GE0HxH9BNEzorNQh_g7KEq4Q26TE4POUmu26ZP5MbwE-gs_jNUfoL1f4Or5-1qlrO-izvB7hhZ.png)
-        - 
-        - 
-    - 
     - Assembly, linking, and loading
         - Assembly and linking are the last steps in the compilation process
             - Assembly and Linking:: they turn a list of instructions into an image of the program's bits in memory
@@ -818,7 +788,7 @@ int dequeue() {
                 - when you cannot rely on the compiler
                 - how to meet your performance goals
                     - when to write high-level code and/or assembly code?
-        - Compilation strategy:: $Compilation = translation + optimization$
+        - Compilation strategy:: \\(Compilation = translation + optimization\\)
         - Compiler determines quality of code
             - use of CPU resources
             - memory access scheduling
@@ -917,15 +887,14 @@ y = x + e;	// statement 4```
                 - Software pipelining
                     - reorder instructions to reduce pipeline stalls
                     - execute other instructions while waiting
-                        - some of the instructions are working on the early part of iteration $n-1$
-                        - other are working on iteration $n$
+                        - some of the instructions are working on the early part of iteration \\(n-1\\)
+                        - other are working on iteration \\(n\\)
                 - Reservation table:: keeps track of CPU resources during instruction scheduling
             - Interpreter:: translates and executes program statements on-the-fly
             - JIT compiler
                 - compiles small sections of code into instructions during program execution
                 - eliminates some translation overhead
                 - often requires more memory
-    - 
     - Performance analysis and optimization
         - Program-level performance analysis
             - embedded systems must perform functions in real time
@@ -952,7 +921,7 @@ y = x + e;	// statement 4```
             - Worst case:: longest time that the program can spend on any input sequence, clearly important for systems that must meet deadlines
             - Best case
         - Analysis of programming performance
-            - formula:: $execution\ time = program\ path + instruction\ timing$
+            - formula:: \\(execution\ time = program\ path + instruction\ timing\\)
                 - program path:: sequence of instructions
                 - data dependencies, pipeline behaviour, and caching
             - accurate performance analysis requires
@@ -963,7 +932,6 @@ y = x + e;	// statement 4```
                 - assume that every instruction takes the same number of clock cycles
                     - count the number of instruction
                     - multiply by the per-instruction execution time
-                - 
             - not all instructions take the same amount of time
                 - floating—point instructions show wide variations in execution time
                 - basic multiply and add operations are fast
@@ -1112,7 +1080,7 @@ for (i = 0; i < N; i++)
             - CPU utilization
                 - fraction of the CPU that is doing useful work
                 - often calculated assuming no scheduling overhead
-                - $U = \text{Utilization} = \displaystyle \frac{\displaystyle \sum^{t_2}_{t_1}T(t)}{t_2 - t_1} = \displaystyle \frac {\text{CPU time for useful work}} {\text{total available CPU time}}$
+                - \\[U = \text{Utilization} = \displaystyle \frac{\displaystyle \sum^{t_2}_{t_1}T(t)}{t_2 - t_1} = \displaystyle \frac {\text{CPU time for useful work}} {\text{total available CPU time}}\\]
         - Process execution characteristics
             - Operating systems determine the process that runs next
             - Scheduling:: choosing the order of running processes
@@ -1260,11 +1228,11 @@ void pall() {
                             - all three periods tart at time zero
                     - sometimes there is no feasible assignment of priorities that guarantees scheduling
                     - total CPU utilization for a set of n tasks is
-                        - $U = \displaystyle \sum_{i=1}^n \displaystyle \frac {T_i} {\tau_i}$
+                        - \\(U = \displaystyle \sum_{i=1}^n \displaystyle \frac {T_i} {\tau_i}\\)
                         - example
-                            - P1 has $P=4$  and $t_{\text{execution}} = 2$
-                            - P2 has $P=7$  and $t_{\text{execution}} = 1$
-                            - hyperperiod is $4 \times 7 = 28$
+                            - P1 has \\(P=4\\)  and \\(t_{\text{execution}} = 2\\)
+                            - P2 has \\(P=7\\)  and \\(t_{\text{execution}} = 1\\)
+                            - hyperperiod is \\(4 \times 7 = 28\\)
                             - the CPU utilization is $\displaystyle \frac {(1 \times 4) + (2 \times 7)} {28} = 0.64$
                     - Given m tasks and ratio between any two periods less than 2
                         - the CPU utilization $U$ has a least upper bound of $U = m(2^{\frac{1}{m}}-1)$
