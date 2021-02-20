@@ -11,4 +11,5 @@ Here is the list of the problem I faced and that I implemented or I have to impl
 - [x] Bubble Sort
 - [x] Selection Sort
 - [x] Insertion Sort
-- [ ] Merge Sort
+- [x] Merge Sort
+- [x] Counting Sort
