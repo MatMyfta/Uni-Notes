@@ -102,7 +102,7 @@
             - Function frames:: C uses Frame mechanism to pass parameter between functions
                 - register holds frame pointer (FP), points to top of frame
                 - element within frame are accessed using offset from FP.
-                    - $[fp, \#-n]$ takes $n^{th}$ location from FP.
+                    - $\[fp, \#-n\]$ takes $n^{th}$ location from FP.
             - Procedure linkage:: convention used to pass values in or out procedures
                 - to ensure any function may call any other
             - Stack Pointer:: defines the end of the current frame
@@ -131,6 +131,7 @@ void poke (char *location, char newval) {
 	(*location) = newval;	// write to location
 }
 poke(DEV1, 8);				// write 8 to dev register
+
 ```
         - How to communicate with devices in a program
             - The simplest way is to communicate with busy-wait I/O, but it's extremely inefficient.
@@ -1092,7 +1093,9 @@ for (i = 0; i < N; i++)
             - CPU utilization
                 - fraction of the CPU that is doing useful work
                 - often calculated assuming no scheduling overhead
-                - \\[U = \text{Utilization} = \displaystyle \frac{\displaystyle \sum^{t_2}_{t_1}T(t)}{t_2 - t_1} = \displaystyle \frac {\text{CPU time for useful work}} {\text{total available CPU time}}\\]
+$$
+U = \text{Utilization} = \displaystyle \frac{\displaystyle \sum^{t_2}_{t_1}T(t)}{t_2 - t_1} = \displaystyle \frac {\text{CPU time for useful work}} {\text{total available CPU time}}
+$$
         - Process execution characteristics
             - Operating systems determine the process that runs next
             - Scheduling:: choosing the order of running processes
@@ -1123,18 +1126,21 @@ for (i = 0; i < N; i++)
             - we need to find a programming technique that allows us to run periodic processes
                 - While loop implementation
                     - simples implementation: process = subroutine
-                    - ```c
+```c
 while ( TRUE ) {
 	p1();
 	p2();
-}```
+}
+```
                         - no control over execution timing, it does not control the rate at which the processes executed
                 - Timed loop implementation
-                    - ```c
+```c
 void pall() {
 	p1();
 	p2();
-}``` encapsulate all processes in a single function that implements the task set
+}
+``` 
+encapsulate all processes in a single function that implements the task set
                         - make the execution time of an iteration equal to the desired period
                         - A timer is a much more reliable way
                             - use the timer to generate periodic interrupts that call pall() function
@@ -1142,7 +1148,7 @@ void pall() {
                     - each task has its own function
                     - each task has its own timer
                         - may not have enough timers to implement all the rates
-                    - ```c
+```c
 void pA() {		/* rate A */
 	p1();
 	p3();
@@ -1151,11 +1157,12 @@ void pB() {		/* rate B */
 	p2();
 	p4();
 	p5();
-}```
+}
+```
                 - Timer + counter implementation
                     - use a software count to divide the timer, then execute processes at rates that are simple multiples of each other
                     - when the rates are not related by a simple ration the counting process becomes more complex
-                    - ```c
+```c
 int p2count = 0;
 void pall() {
 	p1();
@@ -1166,7 +1173,8 @@ void pall() {
 	else 
 		p2count++;
 	p3();
-}```
+}
+```
         - Operating Systems
             - controls resources
                 - who get the CPU
@@ -1240,7 +1248,7 @@ void pall() {
                             - all three periods tart at time zero
                     - sometimes there is no feasible assignment of priorities that guarantees scheduling
                     - total CPU utilization for a set of n tasks is
-                        - \\(U = \displaystyle \sum_{i=1}^n \displaystyle \frac {T_i} {\tau_i}\\)
+$$(U = \displaystyle \sum_{i=1}^n \displaystyle \frac {T_i} {\tau_i}$$
                         - example
                             - P1 has \\(P=4\\)  and \\(t_{\text{execution}} = 2\\)
                             - P2 has \\(P=7\\)  and \\(t_{\text{execution}} = 1\\)
@@ -1292,4 +1300,3 @@ void pall() {
                     - T2 reads flag and sees 0
                     - T1 sets flag to 1 and writes location
                     - T2 sets flag to 1 and overwrites location
-            - 
