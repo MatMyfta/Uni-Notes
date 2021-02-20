@@ -102,7 +102,7 @@
             - Function frames:: C uses Frame mechanism to pass parameter between functions
                 - register holds frame pointer (FP), points to top of frame
                 - element within frame are accessed using offset from FP.
-                    - \\([fp, \#-n]\\) takes \\(n^{th}\\) location from FP.
+                    - $[fp, \#-n]$ takes $n^{th}$ location from FP.
             - Procedure linkage:: convention used to pass values in or out procedures
                 - to ensure any function may call any other
             - Stack Pointer:: defines the end of the current frame
@@ -116,7 +116,7 @@
             - I/O instructions
             - memory-mapped I/O
         - To read a device register:
-            - ```c
+```c
 #define DEV1 0x1000
 // ...
 int peek (char *location) {
@@ -130,7 +130,8 @@ dev_status = peek(DEV1);	// read the device register```
 void poke (char *location, char newval) {
 	(*location) = newval;	// write to location
 }
-poke(DEV1, 8);				// write 8 to dev register```
+poke(DEV1, 8);				// write 8 to dev register
+```
         - How to communicate with devices in a program
             - The simplest way is to communicate with busy-wait I/O, but it's extremely inefficient.
         - Polling:: asking I/O whether it is finished by reading its status register.
@@ -222,7 +223,7 @@ poke(DEV1, 8);				// write 8 to dev register```
                     - Capacity miss:: caused by a too-large working set
                     - Conflict miss:: when two locations map to the same location in the cache
                 - Average memory access time
-                    - let \\(h\\) be the hit rate, follows that \\(1-h\\) is the miss rate
+                    - let $$h$$ be the hit rate, follows that \\(1-h\\) is the miss rate
                     - formula:: \\(t_{av} = ht_{cache} + (1-h)t_{main}\\)
                 - Modern CPUs may use multiple levels of cache
                     - first-level is closest to the CPU, the second-level feeds the first-level cache.
@@ -519,7 +520,7 @@ poke(DEV1, 8);				// write 8 to dev register```
                 - the **current state** of the system
             - Implement the program in a state machine style (as in the hardware design)
             - example: simple belt controller
-            - ```c
+```c
 #define IDLE 0
 #define SEATED 1
 #define BELTED 2
@@ -542,7 +543,8 @@ switch(state) { /* check the current state */
 		if (belt) state = BELTED; /* belt is on---turn off buzzer */
 		else if (!seat) state = IDLE; /* no one in seat—turn off buzzer */
 		break;
-}```
+}
+```
         - 
         - Circular Buffer
             - Stream-oriented processing
@@ -555,7 +557,7 @@ switch(state) { /* check the current state */
                 - use an array as the buffer
                 - the variable \\(pos\\) holds the position of the current sample
                     - this variable moves as new values are added to the buffer
-                - ```c
+```c
 #define CMAX 6 /* filter order */
 int circ[CMAX]; /* circular buffer */
 int pos; /* position of current sample */
@@ -564,11 +566,12 @@ void circ_update(int xnew) {
 	pos = ((pos == CMAX-1) ? 0 : (pos+1));
 	/* insert the new value at the new head */
 	circ[pos] = xnew;
-}```
+}
+```
                 - initialization:: set the buffer values and pos to zero
                 - return:: the \\(i^{th}\\( value of the buffer
                     - translate the index in temporal order
-                - ```c
+```c
 void circ_init() {
 	int i;
 	for (i=0; i<CMAX; i++) /* set values to 0 */
@@ -579,7 +582,8 @@ int circ_get(int i) {
 	/* compute the buffer position */
 	ii = (pos - i) % CMAX;
 	return circ[ii];
-}```
+}
+```
         - 
         - Signal Flow Graph
             - represents many different filtering structures
@@ -592,7 +596,7 @@ int circ_get(int i) {
             - FIR Filter
                 - FIR:: Finite Impulse Response
                 - code looks like this
-                    - ```c
+```c
 for (i=0, y=0.0; i<N; i++)
 	y += x[i] * b[i];```
                 - In C:
@@ -612,13 +616,14 @@ int fir(int xnew) {
 	for (i=0, result=0; i<CMAX; i++)
 		result += b[i] * circ_get(i);
 	return result;
-}```
+}
+```
             - 
             - IIR Filter
                 - IIR:: Infinite Impulse Filter
                 - give significantly less numerical noise than another
                 - In C:
-                    - ```c
+```c
 int iir2(int xnew) {
 	int i, aside, bside, result;
 	for (i=0, aside=0; i<ZMAX; i++)
@@ -628,7 +633,8 @@ int iir2(int xnew) {
 	result = b[0] * (xnew + aside) + bside;
 	circ_update(xnew); /* put the new value in */
 	return result;
-}```
+}
+```
         - 
         - Queues
             - we use queues for data that arrive and depart at unpredictable times
@@ -640,7 +646,7 @@ int iir2(int xnew) {
                 - circular buffer:: a buffer that always has a fixed number of data
                 - queue:: may have varying numbers of elements in it
             - Array based queue in C:
-                - ```c
+```c
 #define Q_SIZE 5 /* your queue size may vary */
 #define Q_MAX (Q_SIZE-1) /* this is the maximum index value into the array */
 int q[Q_SIZE]; /* the array for our queue */
@@ -668,7 +674,8 @@ int dequeue() {
 	else
 		head++;
 	return returnval;
-}```
+}
+```
         - 
         - Producer/Consumer
             - Many systems may take in varying amounts of data over time and produce varying amounts
@@ -816,8 +823,8 @@ int dequeue() {
                     - this requires address computations, some can be done at compile time, while others must be done at run time
                     - example: one-dimensional array a[i]
                         - we can create a pointer (aptr) that points to the array's head
-                        - we can rewrite the reading of a[i] as:```c
- *(aptr + i)```
+                        - we can rewrite the reading of a[i] as:
+                        - `*(aptr + i)`
                     - A C struct is implemented as a contiguous block of memory
                         - fields can be accessed using constant offsets to the base address of the structure
             - Function inlining
@@ -869,11 +876,12 @@ int dequeue() {
                         - NP-complete, but there are efficient heuristic algorithms
             - Operator scheduling
                 - In many cases, we have freedom in the order in which we do things
-                - ```c
-(a + b) * (c - d) ```
+```c
+(a + b) * (c - d) 
+```
                 - different orders of loads, stores, and arithmetic operations ⇒ different execution times on pipelined machines
                 - example
-                    - ```c
+```c
 w = a + b;	// statement 1
 x = c + d;	// statement 2
 y = x + e;	// statement 3
@@ -881,7 +889,8 @@ z = a - b;	// statement 4``` if we swap statement 3 and 4, and then 2 and 3, we 
 w = a + b;	// statement 1
 z = a - b;	// statement 2
 x = c + d;	// statement 3
-y = x + e;	// statement 4```
+y = x + e;	// statement 4
+```
             - Instruction scheduling
                 - when an instruction that takes more cycles than normal to finish is in the pipeline, the pipeline stall appear that reduce performance
                 - Software pipelining
@@ -978,7 +987,7 @@ y = x + e;	// statement 4```
                 - lets us move unnecessary code out of a loop if a computation's result does not depend on operations performed in the loop body
             - Induction variable elimination
                 - a variable whose value is derived from the loop iteration variable's value, the compiler often introduces induction variables to implement the loop
-                - ```c
+```c
 for (i = 0; i < N; i++)
 	for (j = 0; j < M; j++)
 		z[i,j] = b[i,j];
@@ -993,13 +1002,16 @@ for (i = 0; i < N; i++)
 	for (j = 0; j < M; j++) {
 		*(zptr + zbinduct) = *(bptr + zbinduct);
 		zbinduct++;
-	}```
+	}
+```
             - Strength reduction
                 - helps us reduce the cost of a loop iteration
-                    - example: in integer arithmetic, we can use a shift rather than a multiplication by 2, if the shift is faster than the multiply, we probably want to perform the substitution```c
+                    - example: in integer arithmetic, we can use a shift rather than a multiplication by 2, if the shift is faster than the multiply, we probably want to perform the substitution
+```c
  y = x * 2
  // becomes
- y = x << 1```
+ y = x << 1
+ ```
         - Cache oriented loop optimizations
             - loop nest
             - because loops use large quantities of data, cache conflicts are common
