@@ -1,6 +1,6 @@
 # Algorithms and Data Structure problems
 
-📠 In this folder I want to collect all my implementations of the problems that I face when I study. 
+ 👀 In this folder I want to collect all my implementations of the problems that I face when I study. 
 
 ## List of problems
 Here is the list of the problem I faced and that I implemented or I have to implement.
