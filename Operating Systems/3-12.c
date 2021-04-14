@@ -5,7 +5,6 @@
 
     usage: run 
     .\a.out &
-    # wait 2 seconds
     ps -l
 */
 
@@ -14,7 +13,7 @@
 #include <unistd.h>
 
 int main() {
-    int pid = fork();
+    pid_t pid = fork();
 
     // fork error handling
     if (pid < 0) {
@@ -24,11 +23,15 @@ int main() {
 
     if (pid) {
         // parent process
-        sleep(10);
+        printf("parent: %d\n", getpid());
+        while (1) 
+            sleep(1);
         // return 0;
     } else {
         // child process
-        sleep(3);
+        printf("child: %d\n", getpid());
+        sleep(2);
+        printf("child exit\n");
         exit(1);
     }
 
