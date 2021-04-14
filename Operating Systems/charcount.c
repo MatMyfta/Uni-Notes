@@ -30,6 +30,6 @@ int main(int argc, char **argv) {
         } else
             printf("%c",c);
     }
-    
-    printf("\033[0;33mnumber of '%c' character found: %d\033[0;0m\n", match, count_c);
+
+    printf("\n\033[0;33mnumber of '%c' character found: %d\033[0;0m\n", match, count_c);
 }
